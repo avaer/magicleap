@@ -8,10 +8,16 @@ const key = process.env['MAGICLEAP'];
 
 if (key) {
   console.warn('Encrypting magicleap module with MAGICLEAP environment variable');
-  fs.createReadStream(path.join(__dirname, 'lib.zip'))
+  const ws = fs.createReadStream(path.join(__dirname, 'lib.zip'))
     .pipe(crypto.createCipher('aes-256-cbc', new Buffer(key, 'base64')))
     .pipe(fs.createWriteStream(path.join(__dirname, 'lib.zip.enc')));
-  process.exit(0);
+  ws.on('close', () => {
+    process.exit(0);
+  });
+  ws.on('error', err => {
+    console.warn(err.stack);
+    process.exit(1);
+  });
 } else {
   console.warn('NOT encrypting magicleap module because MAGICLEAP environment variable not defined');
   process.exit(1);
