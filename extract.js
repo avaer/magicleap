@@ -1,15 +1,15 @@
 const path = require('path');
 const fs = require('fs');
-const unzipper = require('unzipper');
+const unzpr = require('unzpr');
 
 const p = path.join(__dirname, 'lib.zip');
 fs.lstat(p, err => {
   if (!err) {
     const ws = fs.createReadStream(p)
-      .pipe(unzipper.Extract({
+      .pipe(unzpr.Extract({
         path: __dirname,
       }));
-    ws.on('close', () => {
+    ws.on('done', () => {
       process.exit(0);
     });
     ws.on('error', err => {
