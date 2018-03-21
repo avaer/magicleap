@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/modulesio/magicleap#readme",
   "dependencies": {
-    "unzpr": "0.0.1"
+    "unzpr": "0.0.2"
   }
 }
