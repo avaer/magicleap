@@ -13,7 +13,7 @@ fs.lstat(p, err => {
       process.exit(0);
     });
     ws.on('error', err => {
-      console.warn(err.stack);
+      console.warn(err);
       process.exit(1);
     });
   } else if (err.code === 'ENOENT') {
