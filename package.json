@@ -1,6 +1,6 @@
 {
   "name": "magicleap",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Magic Leap SDK for Node.js",
   "main": "index.js",
   "scripts": {
