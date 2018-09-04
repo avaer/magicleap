@@ -12,7 +12,12 @@ if (key) {
     .pipe(crypto.createDecipher('aes-256-cbc', Buffer.from(key, 'base64')))
     .pipe(fs.createWriteStream(path.join(__dirname, 'lib.zip')));
   ws.on('close', () => {
-    process.exit(0);
+    fs.unlink(path.join(__dirname, 'lib.zip.enc'), err => {
+      if (err && err.code !== 'ENOENT') {
+        console.warn(err);
+      }
+      process.exit(0);
+    });
   });
   ws.on('error', err => {
     console.warn(err.stack);
@@ -20,5 +25,11 @@ if (key) {
   });
 } else {
   console.warn('NOT decrypting magicleap module because MAGICLEAP environment variable not defined');
+  fs.unlink(path.join(__dirname, 'lib.zip.enc'), err => {
+    if (err && err.code !== 'ENOENT') {
+      console.warn(err);
+    }
+    process.exit(0);
+  });
   process.exit(1);
 }
